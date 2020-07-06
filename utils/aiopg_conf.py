@@ -1,17 +1,6 @@
 import databases
-import sqlalchemy
+from system_item.setting import DB_CONF
 
-
-# SQLAlchemy specific code, as with any other app
-# DATABASE_URL = "sqlite:///./test.db"
-DATABASE_URL = "postgresql://postgres:postgres@127.0.0.1/dz_data_test"
-
-database = databases.Database(DATABASE_URL,)
-
-metadata = sqlalchemy.MetaData()
-
-
-engine = sqlalchemy.create_engine(
-    DATABASE_URL
-)
-metadata.create_all(engine)
+db_model = 'postgresql://{user}:{password}@{host}:{port}/{database}'
+jade_db = db_model.format(**DB_CONF)
+jade_db = databases.Database(jade_db, min_size=1, max_size=10)
